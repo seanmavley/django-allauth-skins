@@ -1,0 +1,18 @@
+  <div class="col s12 m6 l3">
+    <div class="card hoverable">
+        <div class="card-image waves-effect waves-block waves-light">
+            <img class="activator" src="{{ project.image.url }}">
+        </div>
+        <div class="card-content">
+            <span class="card-title activator grey-text text-darken-4">{{ project.title }}<i class="material-icons right">more_vert</i></span>
+            
+        </div>
+        <div class="card-reveal">
+            <span class="card-title grey-text text-darken-4">{{ project.title }}<i class="material-icons right">close</i></span>
+            <p>
+              {{ project.about|safe|truncatewords:'20'}}
+            </p>
+            <p><a href="{% url 'project_detail' project.slug %}" class="btn waves-effect waves-light">Learn more</a></p>
+        </div>
+    </div>
+  </div>

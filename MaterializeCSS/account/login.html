@@ -1,0 +1,92 @@
+{% extends "account/base.html" %}
+
+{% load i18n %}
+{% load account socialaccount material_form %}
+
+{% block meta_title %}{% trans "Sign In" %}{% endblock %}
+
+{% block content %}
+<div class="col s12 m8 offset-m2">
+  {% get_providers as socialaccount_providers %}
+
+  {% if socialaccount_providers %}
+        <div class="col s12">
+          <div class="card hoverable">
+            <div class="card-content">
+              <span class="card-title black-text">Sign In Options</span>
+              <p>{% blocktrans with site.name as site_name %}Please sign up for an account, if you do not have one. Otherwise, login using either your third account, or form below{% endblocktrans %}</p>
+            </div>
+            <div class="card-action">
+              <a href="{{ signup_url }}" title="Sign up" class="btn-floating btn-large waves-effect waves-light"><i class=" large material-icons">account_circle</i></a>
+            </div>
+          </div>
+        </div>
+
+  <div class="socialaccount_ballot">
+
+  <div class="col s12">
+    <div class="card hoverable">
+      <div class="card-content center-align">
+      <span class="card-title black-text">Login using...</span>
+      <div class="divider"></div>
+        <p style="padding-top:10px;">
+          {% include "socialaccount/snippets/provider_list.html" with process="login" %}
+        </p>
+      </div>
+    </div>
+  </div>
+
+    <div class="divider"></div>
+  </div>
+
+  {% include "socialaccount/snippets/login_extra.html" %}
+
+  {% else %}
+
+  <p>{% blocktrans %}If you have not created an account yet, then please
+  <a href="{{ signup_url }}">sign up</a> first.{% endblocktrans %}</p>
+  {% endif %}
+
+<!-- Login Form Trigger -->
+  <div class="col s12">
+    <div class="card hoverable">
+      <div class="card-content">
+        <div class="center-align">
+          <a class="waves-effect waves-light btn-large modal-trigger" title="View login form" href="#loginform">Login Form</a>
+          {% if form.errors %}
+            <script type="text/javascript">
+                $(document).ready(function(){
+                  // the "href" attribute of .modal-trigger must specify the modal ID that wants to be triggered
+                  $('#loginform').delay( 4000 ).openModal();
+                });
+            </script>
+            <div style="margin-top:15px;" class="flow-text red-text">
+              Please correct mistakes and <a href="#loginform" style="text-decoration:underline;" class="modal-trigger">try again.</a> The form you submitted had errors.
+            </div>
+          {% endif %}
+        </div>
+      </div>
+    </div>
+  </div>
+  <!-- Login Form Modal -->
+  <div id="loginform" class="modal">
+    <div class="modal-content">
+    <h4 class="flow-text">Login form</h4>
+      <form class="login" method="POST" action="{% url 'account_login' %}">
+        {% csrf_token %}
+        {% form form=form %} {% endform %}
+        {% if redirect_field_value %}
+        <input type="hidden" name="{{ redirect_field_name }}" value="{{ redirect_field_value }}" />
+        {% endif %}
+        <button type="submit" class="btn-floating btn-large waves-effect waves-light" title="Confirm login"><i class="material-icons">send</i></a></button>
+        <a href="#" title="Cancel login" class="modal-action modal-close btn-floating btn-large waves-effect waves-light red"><i class="medium material-icons">cancel</i></a>
+      </form>
+      <p>
+        <a class="flow-text" href="{% url 'account_reset_password' %}">{% trans "Forgot Password?" %}</a>
+      </p>
+    </div>
+  </div>
+</div>
+
+
+{% endblock %}

@@ -1,0 +1,91 @@
+<!doctype html>
+<html lang="{{ LANGUAGE_CODE }}"{% if LANGUAGE_BIDI %} dir="rtl"{% endif %}>
+{% load pages_tags mezzanine_tags i18n staticfiles static %}
+
+<head>
+<meta http-equiv="Content-type" content="text/html; charset=utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="keywords" content="{% block meta_keywords %}{% endblock %}">
+<meta name="description" content="{% block meta_description %}{% endblock %}">
+<title>{% block meta_title %}{% endblock %}{% if settings.SITE_TITLE %} | {{ settings.SITE_TITLE }}{% endif %} {% if settings.SITE_TAGLINE %}:: {{ settings.SITE_TAGLINE }} {% endif %}</title>
+<link rel="shortcut icon" href="{% static "img/favicon.ico" %}">
+
+{% ifinstalled mezzanine.blog %}
+<link rel="alternate" type="application/rss+xml" title="RSS" href="{% url "blog_post_feed" "rss" %}">
+<link rel="alternate" type="application/atom+xml" title="Atom" href="{% url "blog_post_feed" "atom" %}">
+{% endifinstalled %}
+
+<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+{% compress css %}
+<link href="{% static 'css/materialize.css'%}" type="text/css" rel="stylesheet" media="screen,projection" />
+<link href="{% static 'css/style.css'%}" type="text/css" rel="stylesheet" media="screen,projection" />
+
+{% if LANGUAGE_BIDI %}
+<link rel="stylesheet" href="{% static "css/bootstrap-rtl.css" %}">
+{% endif %}
+{% ifinstalled cartridge.shop %}
+<link rel="stylesheet" href="{% static "css/cartridge.css" %}">
+{% if LANGUAGE_BIDI %}
+<link rel="stylesheet" href="{% static "css/cartridge.rtl.css" %}">
+{% endif %}
+{% endifinstalled %}
+{% block extra_css %}
+{% endblock %}
+{% endcompress %}
+
+{% compress js %}
+<!-- <script src="{% static "mezzanine/js/"|add:settings.JQUERY_FILENAME %}"></script>
+<script src="{% static "js/bootstrap.js" %}"></script>
+<script src="{% static "js/bootstrap-extras.js" %}"></script> -->
+<script src="{% static 'js/jquery-2.1.1.min.js'%}"></script>
+<script src="{% static 'js/materialize.js'%}"></script>
+<script src="{% static 'js/init.js'%}"></script>
+{% block extra_js %}{% endblock %}
+{% endcompress %}
+
+<!--[if lt IE 9]>
+<script src="{% static "js/html5shiv.js" %}"></script>
+<script src="{% static "js/respond.min.js" %}"></script>
+<![endif]-->
+
+{% block extra_head %}{% endblock %}
+</head>
+
+<body id="{% block body_id %}body{% endblock %}">
+    <nav class="grey darken-4">
+        <div class="nav-wrapper">
+            {% if settings.SITE_TITLE %}
+                <a href="#!" class="brand-logo" style="padding-left:20px;">{{ settings.SITE_TITLE }}</a>
+            {% endif %}
+            <!-- {% if settings.SITE_TAGLINE %}<p class="navbar-text visible-lg">{{ settings.SITE_TAGLINE }}</p>{% endif %} -->
+
+            {% page_menu "pages/menus/primary.html" %}
+        </div>
+    </nav>
+
+    {% block main %}{% endblock %}
+    {% page_menu "pages/menus/footer.html" %}
+
+    {% include "includes/footer_scripts.html" %}
+  <!-- Search Modal Structure -->
+  <div id="modal1" class="modal bottom-sheet">
+    <div class="modal-content">
+      <h4 class="center-align">What are you looking for?</h4>
+      <div class="divider"></div>
+        <form style="margin-top:10px;">
+            <div class="input-field">
+                <input id="search" type="search" required>
+                <label for="search"><i class="material-icons">search</i></label>
+                <i class="material-icons">close</i>
+                <button href="#!" class="modal-action modal-close btn-floating btn-large waves-effect waves-light left"><i class="material-icons">search</i></button>
+            </div>
+            <div class="modal-footer">
+              <a href="#!" class="modal-action modal-close waves-effect waves-green btn-flat red">Cancel</a>
+            </div>
+        </form>
+    </div>
+  </div>
+
+</body>
+
+</html>
