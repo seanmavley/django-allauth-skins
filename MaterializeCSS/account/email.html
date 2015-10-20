@@ -53,6 +53,8 @@
         {% csrf_token %}
         {% form form=form %} {% endform %}
         <button name="action_add" type="submit" title="Add Email" class="btn-floating btn-large waves-effect waves-light"><i class=" large material-icons">add</i></button>
+        <a href="#" onclick="window.history.back(); return false;" title="Cancel" class="btn-floating waves-effect waves-light red"><i class="material-icons">history</i></a>
+
     </form>
 {% endblock %}
 

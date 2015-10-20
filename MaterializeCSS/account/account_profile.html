@@ -1,0 +1,47 @@
+{% extends "account/base.html" %}
+
+{% load i18n %}
+{% load account %}
+
+{% block meta_title %}{{ request.user|title }}{% trans " Profile" %}{% endblock %}
+
+{% block content %}
+<div class="col s12 m8 offset-m2">
+      <div class="card">
+        <div class="card-content">
+          <span class="card-title black-text">Welcome, {{ user|title }}</span>
+          <ul class="collection">
+            <li class="collection-item avatar">
+            <i class="material-icons circle">account_circle</i>              
+            <span class="title">Your profile</span>
+              <p>Username: {{ user|title }} <br>
+                 Name: {{ user.first_name|title }} {{ user.last_name|title }} <br>
+                 Affiliations: Organization Name
+              </p>
+              <a href="{% url 'account_update' user.username %}" class="secondary-content btn-floating waves-effect waves-light"><i class="material-icons">edit</i></a>
+            </li>
+            <li class="collection-item avatar">
+              <i class="material-icons circle">email</i>
+              <span class="title">Email</span>
+              <p>Email: {{ user.email }} <br/>
+              </p>
+              <a href="{% url 'account_email' %}" class="secondary-content btn-floating waves-effect waves-light"><i class="material-icons">edit</i></a>
+            </li>            
+            <li class="collection-item avatar">
+              <i class="material-icons circle">security</i>
+              <span class="title">Security</span>
+              <p>Password: ******** <br/>
+              </p>
+              <a href="{% url 'account_reset_password' %}" class="secondary-content btn-floating waves-effect waves-light"><i class="material-icons">edit</i></a>
+            </li>
+          </ul>
+          
+        </div>
+        <div class="card-action">
+            <h2 class="flow-text">Quick links</h2>
+            <a href="" title="Go home" class="btn-floating waves-effect waves-light"><i class="material-icons">home</i></a>
+        </div>
+      </div>
+    </div>
+
+{% endblock %}

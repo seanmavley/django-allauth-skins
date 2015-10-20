@@ -1,0 +1,23 @@
+{% extends "account/base.html" %}
+
+{% load i18n %}
+{% load account material_form %}
+
+{% block meta_title %}{{ request.user|title }}{% trans " Profile" %}{% endblock %}
+
+{% block content %}
+<div class="col s12 m8 offset-m2">
+      <div class="card">
+        <div class="card-content">
+        <h2 class="flow-text">Update your information</h2>
+          <form action="." method="POST" class="padding">
+            {% csrf_token %} {% form form=form %} {% endform %}
+            <button type="submit" class="btn-floating btn-large waves-light waves-effect"><i class="large material-icons">done</i></button>
+            <a href="#" onclick="window.history.back(); return false;" title="Cancel" class="btn-floating waves-effect waves-light red"><i class="material-icons">history</i></a>
+
+        </form>
+        </div>
+    </div>
+</div>
+
+{% endblock %}

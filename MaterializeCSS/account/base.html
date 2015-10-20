@@ -36,6 +36,7 @@
                 <li><a href="{% url 'home' %}">Home</a></li>
                 <div class="divider"></div>
                 {% if user.is_authenticated %}
+                <li><a href="{% url 'account_profile' %}">Account</a></li>
                 <li><a href="{% url 'account_email' %}">Change E-mail</a></li>
                 <li><a href="{% url 'account_logout' %}">Sign Out</a></li>
                 {% else %}
